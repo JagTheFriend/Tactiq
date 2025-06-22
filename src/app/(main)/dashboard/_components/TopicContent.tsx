@@ -128,7 +128,7 @@ function TopicModal({
               >
                 Delete Topic
               </Button>
-              <Button color="success" variant="ghost" onPress={onClose}>
+              <Button color="success" variant="ghost">
                 Add Task
               </Button>
             </ModalFooter>
