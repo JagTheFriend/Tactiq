@@ -43,8 +43,11 @@ export default function CurrentTopics() {
         </div>
       )}
 
-      {topics.map((topic) => (
-        <Card className="max-w-[250px] aspect-square bg-gray-100">
+      {topics.map((topic, index) => (
+        <Card
+          key={index + Math.random()}
+          className="max-w-[250px] aspect-square bg-gray-100"
+        >
           <CardBody className="flex justify-center items-center">
             <button className="cursor-pointer shadow-[0_0_0_3px_#000000_inset] px-6 py-2 bg-transparent border border-white text-black rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
               {topic.name}
