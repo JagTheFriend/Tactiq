@@ -23,7 +23,7 @@ import {
   deleteTopic,
   getOpenRouterResponse,
   updateTopic,
-} from "../action";
+} from "./action";
 
 export default function TopicDetails({ topic }: { topic: Topic }) {
   return (
@@ -53,7 +53,7 @@ export default function TopicDetails({ topic }: { topic: Topic }) {
 
 function EditTopicModal({ topic }: { topic: Topic }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [currentTopic, setCurrentTopic] = useState("");
+  const [currentTopic, setCurrentTopic] = useState(topic.name);
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -73,6 +73,7 @@ function EditTopicModal({ topic }: { topic: Topic }) {
                   label="Edit Topic Name"
                   type="text"
                   onInput={(e) => setCurrentTopic(e.currentTarget.value.trim())}
+                  defaultValue={topic.name}
                 />
               </ModalBody>
               <ModalFooter>

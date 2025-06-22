@@ -1,6 +1,7 @@
 "use server";
 
 import { openrouter } from "@openrouter/ai-sdk-provider";
+import { TaskStatus } from "@prisma/client";
 import { generateText } from "ai";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
@@ -78,4 +79,41 @@ export const addTask = authActionClient
       }),
     });
     return revalidatePath(`/topic/${parsedInput.topicId}`);
+  });
+
+export const deleteTask = authActionClient
+  .inputSchema(
+    z.object({
+      taskId: z.string(),
+    })
+  )
+  .action(async ({ parsedInput, ctx }) => {
+    const { topicId } = await ctx.db.task.delete({
+      where: {
+        id: parsedInput.taskId,
+      },
+    });
+    return revalidatePath(`/topic/${topicId}`);
+  });
+
+export const updateTask = authActionClient
+  .inputSchema(
+    z.object({
+      taskId: z.string(),
+      name: z.string(),
+      status: z.nativeEnum(TaskStatus),
+    })
+  )
+  .action(async ({ ctx, parsedInput }) => {
+    const { topicId } = await ctx.db.task.update({
+      where: {
+        id: parsedInput.taskId,
+      },
+      data: {
+        name: parsedInput.name,
+        status: parsedInput.status,
+      },
+    });
+
+    return revalidatePath(`/topic/${topicId}`);
   });

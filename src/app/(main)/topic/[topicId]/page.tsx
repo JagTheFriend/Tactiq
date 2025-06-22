@@ -1,6 +1,6 @@
 import TaskList from "./_components/TaskList";
 import TopicDetails from "./_components/TopicDetails";
-import { getTopic } from "./action";
+import { getTopic } from "./_components/action";
 
 export default async function TopicContent({
   params,
@@ -16,8 +16,12 @@ export default async function TopicContent({
 
   return (
     <main className="p-5 flex flex-col gap-4">
-      {data && <TopicDetails topic={data} />}
-      <TaskList tasks={data?.task ?? []} />
+      {data && (
+        <>
+          <TopicDetails topic={data} />
+          <TaskList tasks={data.task} />
+        </>
+      )}
     </main>
   );
 }
