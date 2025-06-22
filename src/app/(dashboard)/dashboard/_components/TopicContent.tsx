@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  addToast,
   Button,
   Modal,
   ModalBody,
@@ -17,7 +18,7 @@ import {
 } from "@heroui/react";
 import type { Task, Topic } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { getTasks } from "./action";
+import { deleteTopic, getTasks } from "./action";
 
 export default function TopicContent({ topic }: { topic: Topic }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -84,10 +85,33 @@ function TopicModal({
                 )}
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={async () => {
+                    setIsLoading(true);
+                    const { serverError } = await deleteTopic({
+                      topicId: topic.id,
+                    });
+                    setIsLoading(false);
+                    if (serverError) {
+                      return addToast({
+                        title: "Unable to delete topic.",
+                        description: "Try again later",
+                        color: "danger",
+                      });
+                    }
+                    addToast({
+                      title: "Deleted topic!",
+                      color: "success",
+                    });
+                    location.reload();
+                    onClose();
+                  }}
+                >
+                  Delete Topic
                 </Button>
-                <Button color="primary" variant="ghost" onPress={onClose}>
+                <Button color="success" variant="ghost" onPress={onClose}>
                   Add Task
                 </Button>
               </ModalFooter>

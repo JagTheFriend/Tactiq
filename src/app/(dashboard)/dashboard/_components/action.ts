@@ -24,6 +24,16 @@ export const addTopic = authActionClient
     revalidatePath("/dashboard");
   });
 
+export const deleteTopic = authActionClient
+  .inputSchema(
+    z.object({
+      topicId: z.string(),
+    })
+  )
+  .action(async ({ ctx, parsedInput }) => {
+    return await ctx.db.topic.delete({ where: { id: parsedInput.topicId } });
+  });
+
 export const getTasks = authActionClient
   .inputSchema(
     z.object({
