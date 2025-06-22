@@ -1,6 +1,7 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
+import { motion } from "motion/react";
 import CurrentTopics from "./_components/CurrentTopics";
 import NewTopicCard from "./_components/NewTopic";
 
@@ -25,9 +26,9 @@ function Welcome() {
 
 function Content() {
   return (
-    <div className="grid grid-cols-3 gap-4 gap-y-10">
+    <motion.div layout="position" className="grid grid-cols-3 gap-4 gap-y-10">
       <NewTopicCard />
       <CurrentTopics />
-    </div>
+    </motion.div>
   );
 }

@@ -2,8 +2,10 @@
 
 import { Button, Card, CardBody, CardFooter } from "@heroui/react";
 import { type Topic } from "@prisma/client";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { getTopics } from "./action";
+import TopicContent from "./TopicContent";
 
 export default function CurrentTopics() {
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -44,19 +46,34 @@ export default function CurrentTopics() {
       )}
 
       {topics.map((topic, index) => (
-        <Card
-          key={index + Math.random()}
-          className="max-w-[250px] aspect-square bg-gray-100"
+        <motion.div
+          layout
+          key={topic.id}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{
+            duration: 0.5,
+          }}
         >
-          <CardBody className="flex justify-center items-center">
-            <button className="cursor-pointer shadow-[0_0_0_3px_#000000_inset] px-6 py-2 bg-transparent border border-white text-black rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
-              {topic.name}
-            </button>
-          </CardBody>
-          <CardFooter className="cursor-default">
-            <p>Last Edited: {topic.updatedAt.toLocaleDateString("en-GB")}</p>
-          </CardFooter>
-        </Card>
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Card
+              key={index + Math.random()}
+              className="max-w-[250px] aspect-square bg-gray-100 hover:border-1"
+            >
+              <CardBody className="flex justify-center items-center">
+                <TopicContent topic={topic} />
+              </CardBody>
+              <CardFooter className="cursor-default">
+                <p>
+                  Last Edited: {topic.updatedAt.toLocaleDateString("en-GB")}
+                </p>
+              </CardFooter>
+            </Card>
+          </motion.div>
+        </motion.div>
       ))}
     </>
   );
