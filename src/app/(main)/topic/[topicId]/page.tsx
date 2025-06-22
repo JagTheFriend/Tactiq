@@ -16,7 +16,7 @@ export default async function TopicContent({
 
   return (
     <main className="p-5 flex flex-col gap-4">
-      <TopicDetails topicName={data?.name ?? ""} />
+      {data && <TopicDetails topic={data} />}
       <TaskList tasks={data?.task ?? []} />
     </main>
   );
