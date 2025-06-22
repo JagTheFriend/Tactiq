@@ -24,7 +24,7 @@ model Topic {
 }
 
 enum TaskStatus {
-    ACTIVE
+    PENDING
     DONE
 }
 
@@ -33,7 +33,7 @@ model Task {
 
     name     String
     authorId String
-    status   TaskStatus @default(ACTIVE)
+    status   TaskStatus @default(PENDING)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
