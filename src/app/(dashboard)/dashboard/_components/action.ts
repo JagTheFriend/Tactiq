@@ -23,3 +23,18 @@ export const addTopic = authActionClient
     });
     revalidatePath("/dashboard");
   });
+
+export const getTasks = authActionClient
+  .inputSchema(
+    z.object({
+      topicId: z.string(),
+    })
+  )
+  .action(async ({ parsedInput, ctx }) => {
+    console.log("heyy");
+    return await ctx.db.task.findMany({
+      where: {
+        topicId: parsedInput.topicId,
+      },
+    });
+  });
