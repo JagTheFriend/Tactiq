@@ -3,9 +3,9 @@
 import { Button, Card, CardBody, CardFooter } from "@heroui/react";
 import { type Topic } from "@prisma/client";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getTopics } from "./action";
-import TopicContent from "./TopicContent";
 
 export default function CurrentTopics() {
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -64,7 +64,13 @@ export default function CurrentTopics() {
               className="max-w-[250px] aspect-square bg-gray-100 hover:border-slate-900"
             >
               <CardBody className="flex justify-center items-center">
-                <TopicContent topic={topic} />
+                <Link
+                  className="cursor-pointer px-6 py-2 bg-transparent border-1 border-gray-800 text-black rounded-lg font-medium transform hover:-translate-y-1 transition duration-400"
+                  href={`/topic/${topic.id}`}
+                  prefetch
+                >
+                  {topic.name}
+                </Link>
               </CardBody>
               <CardFooter className="cursor-default">
                 <p>

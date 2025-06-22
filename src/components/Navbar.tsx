@@ -58,6 +58,7 @@ export const AcmeLogo = () => {
 
 export default function CustomNavbar() {
   const pathname = usePathname();
+  const { isSignedIn } = useUser();
 
   if (["/login", "/signup"].includes(pathname)) {
     return <></>;
@@ -70,6 +71,13 @@ export default function CustomNavbar() {
         <p className="font-bold text-inherit">Tactiq</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        {isSignedIn && (
+          <NavbarItem>
+            <Link color="foreground" href="/dashboard">
+              Dashboard
+            </Link>
+          </NavbarItem>
+        )}
         <NavbarItem>
           <Link color="foreground" href="/features">
             Features
