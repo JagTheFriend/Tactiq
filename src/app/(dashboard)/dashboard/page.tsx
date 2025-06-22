@@ -25,7 +25,7 @@ function Welcome() {
 
 function Content() {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-3 gap-4 gap-y-10">
       <NewTopicCard />
       <CurrentTopics />
     </div>
@@ -34,7 +34,7 @@ function Content() {
 
 function NewTopicCard() {
   return (
-    <Card className="max-w-[250px] aspect-square bg-gray-200">
+    <Card className="max-w-[250px] aspect-square bg-gray-50 border-2 border-dashed">
       <CardBody className="flex justify-center items-center">
         <button className="p-[3px] relative cursor-pointer">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />

@@ -40,6 +40,9 @@ export const authActionClient = actionClient
       where: {
         authorId: session.userId,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
 
     return next({ ctx: { projects, session } });
