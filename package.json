@@ -24,6 +24,7 @@
 		"@prisma/client": "^6.5.0",
 		"@t3-oss/env-nextjs": "^0.12.0",
 		"framer-motion": "^12.18.1",
+		"motion": "^12.18.1",
 		"next": "^15.2.3",
 		"next-safe-action": "^8.0.4",
 		"react": "^19.0.0",
