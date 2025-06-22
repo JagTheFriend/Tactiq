@@ -53,7 +53,7 @@ export default function CurrentTopics() {
               {topic.name}
             </button>
           </CardBody>
-          <CardFooter>
+          <CardFooter className="cursor-default">
             <p>Last Edited: {topic.updatedAt.toLocaleDateString("en-GB")}</p>
           </CardFooter>
         </Card>

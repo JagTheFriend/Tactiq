@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { authActionClient } from "~/server/safe-action";
 
@@ -14,10 +15,11 @@ export const addTopic = authActionClient
     })
   )
   .action(async ({ parsedInput, ctx }) => {
-    return await ctx.db.topic.create({
+    await ctx.db.topic.create({
       data: {
         name: parsedInput.topicName,
         authorId: ctx.session.userId,
       },
     });
+    revalidatePath("/dashboard");
   });

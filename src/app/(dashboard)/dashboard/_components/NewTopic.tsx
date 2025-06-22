@@ -1,3 +1,5 @@
+"use client";
+
 import {
   addToast,
   Button,
@@ -98,6 +100,8 @@ function NewTopicModal({
                     title: "Added topic!",
                     color: "success",
                   });
+                  location.reload();
+                  onClose();
                 }}
               >
                 {isLoading ? "Adding" : "Add"}

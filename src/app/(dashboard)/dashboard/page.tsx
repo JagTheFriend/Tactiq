@@ -17,7 +17,7 @@ function Welcome() {
   const { user } = useUser();
 
   return (
-    <section className="text-2xl">
+    <section className="text-3xl underline cursor-default">
       Welcome <span className="font-semibold">{user?.username}!</span>
     </section>
   );
