@@ -1,9 +1,21 @@
+import TopicDetails from "./_components/TopicDetails";
+import { getTopic } from "./action";
+
 export default async function TopicContent({
   params,
 }: {
   params: Promise<{ topicId: string }>;
 }) {
   const { topicId } = await params;
+  const { serverError, data } = await getTopic({ id: topicId });
 
-  return <>{topicId}</>;
+  if (serverError) {
+    return <div>An Error Occurred!</div>;
+  }
+
+  return (
+    <main className="p-5 flex flex-col">
+      <TopicDetails topicName={data?.name ?? ""} />
+    </main>
+  );
 }

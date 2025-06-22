@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardBody, CardFooter } from "@heroui/react";
+import { Button, Card, CardBody } from "@heroui/react";
 import { type Topic } from "@prisma/client";
 import { motion } from "motion/react";
 import Link from "next/link";
@@ -72,11 +72,6 @@ export default function CurrentTopics() {
                   {topic.name}
                 </Link>
               </CardBody>
-              <CardFooter className="cursor-default">
-                <p>
-                  Last Edited: {topic.updatedAt.toLocaleDateString("en-GB")}
-                </p>
-              </CardFooter>
             </Card>
           </motion.div>
         </motion.div>
