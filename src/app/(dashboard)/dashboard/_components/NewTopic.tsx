@@ -13,6 +13,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@heroui/react";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { addTopic } from "./action";
 
@@ -20,7 +21,7 @@ export default function NewTopicCard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <>
+    <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.2 }}>
       <Card className="max-w-[250px] aspect-square bg-gray-50 border-2 border-dashed">
         <CardBody className="flex justify-center items-center">
           <button
@@ -35,7 +36,7 @@ export default function NewTopicCard() {
         </CardBody>
       </Card>
       <NewTopicModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-    </>
+    </motion.div>
   );
 }
 

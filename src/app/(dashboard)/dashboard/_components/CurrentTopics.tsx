@@ -61,7 +61,7 @@ export default function CurrentTopics() {
           >
             <Card
               key={index + Math.random()}
-              className="max-w-[250px] aspect-square bg-gray-100 hover:border-1"
+              className="max-w-[250px] aspect-square bg-gray-100 hover:border-slate-900"
             >
               <CardBody className="flex justify-center items-center">
                 <TopicContent topic={topic} />
