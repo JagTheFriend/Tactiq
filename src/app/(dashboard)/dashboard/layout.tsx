@@ -3,15 +3,5 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      {/* <SignedIn> */}
-      {children}
-      {/* </SignedIn> */}
-
-      {/* <SignedOut> */}
-      {/* <RedirectToSignIn />
-      </SignedOut> */}
-    </>
-  );
+  return <>{children}</>;
 }
