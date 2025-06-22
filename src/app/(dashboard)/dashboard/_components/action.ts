@@ -1,5 +1,7 @@
 "use server";
 
+import { openrouter } from "@openrouter/ai-sdk-provider";
+import { generateText } from "ai";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { authActionClient } from "~/server/safe-action";
@@ -34,6 +36,17 @@ export const deleteTopic = authActionClient
     return await ctx.db.topic.delete({ where: { id: parsedInput.topicId } });
   });
 
+export const getOpenRouterResponse = authActionClient
+  .inputSchema(z.object({ topic: z.string() }))
+  .action(async ({ ctx, parsedInput }) => {
+    const { text } = await generateText({
+      model: openrouter("google/gemma-3n-e4b-it:free"),
+      prompt: `Generate a list of 5 concise, actionable tasks to learn about "${parsedInput.topic}". Return only the tasks, no numbering or formatting. Additionally, instead of backticks and or singly quotes, always use double quotes.`,
+    });
+
+    return text.trim().split("\n");
+  });
+
 export const getTasks = authActionClient
   .inputSchema(
     z.object({
@@ -41,7 +54,6 @@ export const getTasks = authActionClient
     })
   )
   .action(async ({ parsedInput, ctx }) => {
-    console.log("heyy");
     return await ctx.db.task.findMany({
       where: {
         topicId: parsedInput.topicId,
