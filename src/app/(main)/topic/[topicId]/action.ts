@@ -15,7 +15,11 @@ export const getTopic = authActionClient
         id,
       },
       include: {
-        task: true,
+        task: {
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
       },
     });
   });

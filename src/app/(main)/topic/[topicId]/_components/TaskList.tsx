@@ -18,18 +18,30 @@ export default function TaskList({ tasks }: { tasks: Task[] }) {
         <TableColumn>NAME</TableColumn>
         <TableColumn>STATUS</TableColumn>
       </TableHeader>
-      <TableBody>
-        {tasks.map((t) => (
-          <TableRow key={Math.random()}>
-            <TableCell>{t.name}</TableCell>
-            <TableCell>
-              <Button color={t.status == "PENDING" ? "danger" : "success"}>
-                {t.status}
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
+      {tasks.length != 0 ? (
+        <TableBody>
+          {tasks.map((t) => (
+            <TableRow
+              key={t.id}
+              className={`cursor-pointer font-semibold
+                hover:scale-95 hover:bg-gray-100 transition
+                ${t.status === "DONE" ? "opacity-70" : "opacity-100"}`}
+            >
+              <TableCell>{t.name}</TableCell>
+              <TableCell>
+                <Button
+                  color={t.status == "PENDING" ? "danger" : "success"}
+                  size="sm"
+                >
+                  {t.status}
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      ) : (
+        <TableBody emptyContent={"Add a task to get started"}>{[]}</TableBody>
+      )}
     </Table>
   );
 }
