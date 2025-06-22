@@ -64,84 +64,90 @@ function TopicModal({
   }, [isOpen]);
 
   return (
-    <>
-      <Modal isOpen={isOpen} size="md" onClose={onClose}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-row font-normal gap-1">
-                Current Topic: <span className="font-medium">{topic.name}</span>
-              </ModalHeader>
-              <ModalBody>
+    <Modal isOpen={isOpen} size="md" onClose={onClose}>
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className="flex flex-row font-normal gap-1">
+              Current Topic: <span className="font-medium">{topic.name}</span>
+            </ModalHeader>
+            <ModalBody>
+              <Table aria-label="Task list">
+                <TableHeader>
+                  <TableColumn>NAME</TableColumn>
+                  <TableColumn>STATUS</TableColumn>
+                </TableHeader>
                 {isLoading && !isError ? (
-                  <Button isLoading>Loading</Button>
+                  <TableBody
+                    emptyContent={
+                      <Button variant="light" isLoading>
+                        Loading
+                      </Button>
+                    }
+                  >
+                    {[]}
+                  </TableBody>
+                ) : tasks.length == 0 ? (
+                  <TableBody emptyContent={"No tasks to display."}>
+                    {[]}
+                  </TableBody>
                 ) : (
                   <TaskTable tasks={tasks} />
                 )}
-                {isError && (
-                  <Button variant="shadow" color="danger">
-                    An Error Occurred
-                  </Button>
-                )}
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  color="danger"
-                  variant="light"
-                  onPress={async () => {
-                    setIsLoading(true);
-                    const { serverError } = await deleteTopic({
-                      topicId: topic.id,
-                    });
-                    setIsLoading(false);
-                    if (serverError) {
-                      return addToast({
-                        title: "Unable to delete topic.",
-                        description: "Try again later",
-                        color: "danger",
-                      });
-                    }
-                    addToast({
-                      title: "Deleted topic!",
-                      color: "success",
-                    });
-                    location.reload();
-                    onClose();
-                  }}
-                >
-                  Delete Topic
+              </Table>
+              {isError && (
+                <Button variant="shadow" color="danger">
+                  An Error Occurred
                 </Button>
-                <Button color="success" variant="ghost" onPress={onClose}>
-                  Add Task
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+              )}
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                color="danger"
+                variant="light"
+                onPress={async () => {
+                  setIsLoading(true);
+                  const { serverError } = await deleteTopic({
+                    topicId: topic.id,
+                  });
+                  setIsLoading(false);
+                  if (serverError) {
+                    return addToast({
+                      title: "Unable to delete topic.",
+                      description: "Try again later",
+                      color: "danger",
+                    });
+                  }
+                  addToast({
+                    title: "Deleted topic!",
+                    color: "success",
+                  });
+                  location.reload();
+                  onClose();
+                }}
+              >
+                Delete Topic
+              </Button>
+              <Button color="success" variant="ghost" onPress={onClose}>
+                Add Task
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
   );
 }
 
 function TaskTable({ tasks }: { tasks: Task[] }) {
   return (
-    <Table aria-label="Task list">
-      <TableHeader>
-        <TableColumn>NAME</TableColumn>
-        <TableColumn>STATUS</TableColumn>
-      </TableHeader>
-      {tasks.length > 0 ? (
-        <TableBody>
-          {tasks.map((task, index) => (
-            <TableRow key={index + Math.random()}>
-              <TableCell>{task.name}</TableCell>
-              <TableCell>{task.status}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      ) : (
-        <TableBody emptyContent={"No tasks to display."}>{[]}</TableBody>
-      )}
-    </Table>
+    <TableBody>
+      {tasks.map((task, index) => (
+        <TableRow key={index + Math.random()}>
+          <TableCell>{task.name}</TableCell>
+          <TableCell>{task.status}</TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }
