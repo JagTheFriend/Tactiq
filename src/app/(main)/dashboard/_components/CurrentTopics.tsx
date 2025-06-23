@@ -46,7 +46,7 @@ export default function CurrentTopics() {
       )}
 
       {topics.map((topic, index) => (
-        <motion.div
+        <motion.section
           layout
           key={topic.id}
           initial={{ opacity: 0 }}
@@ -74,7 +74,7 @@ export default function CurrentTopics() {
               </CardBody>
             </Card>
           </motion.div>
-        </motion.div>
+        </motion.section>
       ))}
     </>
   );

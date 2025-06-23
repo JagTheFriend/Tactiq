@@ -32,7 +32,7 @@ export default function TaskList({ tasks }: { tasks: Task[] }) {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   return (
-    <motion.div
+    <motion.section
       initial={{ opacity: "0%" }}
       whileInView={{ opacity: "100%" }}
       transition={{ duration: 0.9 }}
@@ -78,7 +78,7 @@ export default function TaskList({ tasks }: { tasks: Task[] }) {
       {selectedTask && (
         <EditTaskButton task={selectedTask} onClose={onClose} isOpen={isOpen} />
       )}
-    </motion.div>
+    </motion.section>
   );
 }
 
