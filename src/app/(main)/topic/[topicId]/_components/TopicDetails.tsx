@@ -54,7 +54,6 @@ export default function TopicDetails({ topic }: { topic: Topic }) {
 function EditTopicModal({ topic }: { topic: Topic }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentTopic, setCurrentTopic] = useState(topic.name);
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -77,66 +76,102 @@ function EditTopicModal({ topic }: { topic: Topic }) {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button
-                  color="danger"
-                  variant="light"
-                  disabled={isLoading}
-                  onPress={async () => {
-                    setIsLoading(true);
-                    const { serverError } = await deleteTopic({ id: topic.id });
-                    setIsLoading(false);
-
-                    if (serverError) {
-                      return addToast({
-                        title: `Failed to deleted ${topic.name}`,
-                        description: "Try again later!",
-                        color: "danger",
-                      });
-                    }
-
-                    addToast({
-                      title: `Deleted ${topic.name}!`,
-                      color: "success",
-                    });
-                    onClose();
-                    redirect("/dashboard");
-                  }}
-                >
-                  Delete
-                </Button>
-                <Button
-                  color="primary"
-                  disabled={isLoading || currentTopic.length == 0}
-                  onPress={async () => {
-                    setIsLoading(true);
-                    const { serverError } = await updateTopic({
-                      id: topic.id,
-                      name: currentTopic,
-                    });
-                    setIsLoading(false);
-
-                    if (serverError) {
-                      return addToast({
-                        title: "Failed to rename",
-                        description: "Try again later!",
-                        color: "danger",
-                      });
-                    }
-                    addToast({
-                      title: `Renamed ${topic.name} to ${currentTopic}!`,
-                      color: "success",
-                    });
-                    onClose();
-                  }}
-                >
-                  Save
-                </Button>
+                <DeleteTopic topic={topic} onClose={onClose} />
+                <RenameTopic
+                  topic={topic}
+                  currentTopic={currentTopic}
+                  onClose={onClose}
+                />
               </ModalFooter>
             </>
           )}
         </ModalContent>
       </Modal>
     </>
+  );
+}
+
+function DeleteTopic({
+  topic,
+  onClose,
+}: {
+  topic: Topic;
+  onClose: () => void;
+}) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  return (
+    <Button
+      color="danger"
+      variant="light"
+      disabled={isLoading}
+      isLoading={isLoading}
+      onPress={async () => {
+        setIsLoading(true);
+        const { serverError } = await deleteTopic({ id: topic.id });
+        setIsLoading(false);
+
+        if (serverError) {
+          return addToast({
+            title: `Failed to deleted ${topic.name}`,
+            description: "Try again later!",
+            color: "danger",
+          });
+        }
+
+        addToast({
+          title: `Deleted ${topic.name}!`,
+          color: "success",
+        });
+        onClose();
+        redirect("/dashboard");
+      }}
+    >
+      Delete
+    </Button>
+  );
+}
+
+function RenameTopic({
+  topic,
+  currentTopic,
+  onClose,
+}: {
+  topic: Topic;
+  currentTopic: string;
+  onClose: () => void;
+}) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  return (
+    <Button
+      color="primary"
+      isLoading={isLoading}
+      disabled={isLoading || currentTopic.length == 0}
+      onPress={async () => {
+        setIsLoading(true);
+        const { serverError } = await updateTopic({
+          id: topic.id,
+          name: currentTopic,
+        });
+        setIsLoading(false);
+
+        if (serverError) {
+          return addToast({
+            title: "Failed to rename",
+            description: "Try again later!",
+            color: "danger",
+          });
+        }
+        addToast({
+          title: `Renamed ${topic.name} to ${currentTopic}!`,
+          color: "success",
+        });
+        onClose();
+      }}
+    >
+      Save
+    </Button>
   );
 }
 

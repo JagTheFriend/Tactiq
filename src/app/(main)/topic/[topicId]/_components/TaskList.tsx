@@ -23,6 +23,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { TaskStatus, type Task } from "@prisma/client";
+import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { deleteTask, updateTask } from "./action";
 
@@ -31,7 +32,11 @@ export default function TaskList({ tasks }: { tasks: Task[] }) {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: "0%" }}
+      whileInView={{ opacity: "100%" }}
+      transition={{ duration: 0.9 }}
+    >
       <Table>
         <TableHeader>
           <TableColumn>NAME</TableColumn>
@@ -55,6 +60,10 @@ export default function TaskList({ tasks }: { tasks: Task[] }) {
                   <Button
                     color={task.status == "PENDING" ? "danger" : "success"}
                     size="sm"
+                    onPress={() => {
+                      setSelectedTask(task);
+                      onOpen();
+                    }}
                   >
                     {task.status}
                   </Button>
@@ -69,7 +78,7 @@ export default function TaskList({ tasks }: { tasks: Task[] }) {
       {selectedTask && (
         <EditTaskButton task={selectedTask} onClose={onClose} isOpen={isOpen} />
       )}
-    </>
+    </motion.div>
   );
 }
 
