@@ -2,6 +2,7 @@
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { HeroUIProvider, ToastProvider } from "@heroui/react";
+import { AnimatePresence } from "motion/react";
 import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
 
@@ -14,7 +15,9 @@ export default function BaseProvider({
     <ClerkProvider>
       <HeroUIProvider>
         <ToastProvider />
-        <BaseLayout>{children}</BaseLayout>
+        <BaseLayout>
+          <AnimatePresence>{children}</AnimatePresence>
+        </BaseLayout>
       </HeroUIProvider>
     </ClerkProvider>
   );
