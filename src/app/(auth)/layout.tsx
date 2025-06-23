@@ -6,7 +6,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <BackgroundBeamsWithCollision>
+    <BackgroundBeamsWithCollision className="h-full">
       <div className="w-full h-full flex justify-center">{children}</div>
     </BackgroundBeamsWithCollision>
   );

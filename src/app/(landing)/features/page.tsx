@@ -13,10 +13,7 @@ import { cn } from "~/server/util";
 
 export default function Features() {
   return (
-    <div
-      className="flex flex-col items-center gap-4 w-full"
-      style={{ height: "100vh" }}
-    >
+    <div className="flex flex-col items-center gap-4 w-full pb-4">
       <TypewriterEffect />
       <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] justify-center">
         {items.map((item, i) => (
