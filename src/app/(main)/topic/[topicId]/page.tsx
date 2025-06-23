@@ -15,7 +15,7 @@ export default async function TopicContent({
   }
 
   return (
-    <main className="p-5 flex flex-col gap-4">
+    <main className="flex flex-col gap-4">
       {data && (
         <>
           <TopicDetails topic={data} />
