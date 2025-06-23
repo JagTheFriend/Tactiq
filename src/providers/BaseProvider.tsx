@@ -28,7 +28,7 @@ function BaseLayout({ children }: { children: React.ReactNode }) {
     <main className="flex h-screen flex-col overflow-x-hidden">
       <div className="flex-grow text-black antialiased">
         <Navbar />
-        {children}
+        <div className="p-5 w-full h-full">{children}</div>
       </div>
       <Footer />
     </main>
