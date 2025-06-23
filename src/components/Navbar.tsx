@@ -1,6 +1,6 @@
 "use client";
 
-import { UserButton, useUser } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 import {
   Button,
   Link,
@@ -8,76 +8,75 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
 } from "@heroui/react";
-import { usePathname } from "next/navigation";
+import { useState } from "react";
 
-export const AcmeLogo = () => {
+export const TactiqLogo = () => {
   return (
     <svg
-      width="51"
+      width="40"
       height="40"
-      viewBox="0 0 51 40"
+      viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M12.446 0L22.7801 8.82887C23.3936 9.35302 23.7473 10.1222 23.7473 10.9323V17.5862L13.4131 8.75734C12.7996 8.23319 12.446 7.464 12.446 6.65386V0Z"
-        fill="#7B19D8"
+        d="M17.343 2.65705L20 0L40 20L20 40L17.3429 37.3429L34.6859 20L17.343 2.65705Z"
+        fill="#D41C1C"
       ></path>
       <path
-        d="M12.446 40L22.7801 31.1711C23.3936 30.647 23.7473 29.8778 23.7473 29.0677V22.4138L13.4131 31.2427C12.7996 31.7668 12.446 32.536 12.446 33.3461V40Z"
-        fill="#7B19D8"
+        d="M13.8744 6.12564L16.5314 3.46859L33.0628 20L16.5314 36.5314L13.8744 33.8744L27.7487 20L13.8744 6.12564Z"
+        fill="#D41C1C"
       ></path>
       <path
-        d="M0.117188 9.31034L10.3108 17.9705C10.805 18.3904 11.4308 18.6207 12.0775 18.6207H20.2982L10.1297 9.96253C9.63514 9.54141 9.00837 9.31034 8.36065 9.31034H0.117188Z"
-        fill="#7B19D8"
+        d="M0 20L13.0628 6.93718L26.1256 20L13.0628 33.0628L10.4058 30.4058L20.8115 20L13.0628 12.2513L2.65705 22.657L0 20Z"
+        fill="#D41C1C"
       ></path>
       <path
-        d="M0.117188 30.6897L10.2481 22.0345C10.7432 21.6115 11.3713 21.3793 12.0206 21.3793H20.3227L10.1291 30.0394C9.63487 30.4593 9.00904 30.6897 8.36236 30.6897H0.117188Z"
-        fill="#7B19D8"
+        d="M13.0628 13.8744L10.4058 16.5314L13.8744 20L6.93718 26.9372L9.59422 29.5942L19.1885 20L13.0628 13.8744Z"
+        fill="#D41C1C"
       ></path>
       <path
-        d="M37.7884 0L27.4542 8.82887C26.8407 9.35302 26.4871 10.1222 26.4871 10.9323V17.5862L36.8212 8.75734C37.4347 8.23319 37.7884 7.464 37.7884 6.65386V0Z"
-        fill="#7B19D8"
-      ></path>
-      <path
-        d="M37.7884 40L27.4542 31.1711C26.8407 30.647 26.4871 29.8778 26.4871 29.0677V22.4138L36.8212 31.2427C37.4347 31.7668 37.7884 32.536 37.7884 33.3461V40Z"
-        fill="#7B19D8"
-      ></path>
-      <path
-        d="M50.1172 9.31034L39.9236 17.9705C39.4294 18.3904 38.8035 18.6207 38.1569 18.6207H29.9361L40.1047 9.96253C40.5992 9.54141 41.226 9.31034 41.8737 9.31034H50.1172Z"
-        fill="#7B19D8"
-      ></path>
-      <path
-        d="M50.1172 30.6897L39.9863 22.0345C39.4912 21.6115 38.863 21.3793 38.2137 21.3793H29.9117L40.1052 30.0394C40.5995 30.4593 41.2253 30.6897 41.872 30.6897H50.1172Z"
-        fill="#7B19D8"
+        d="M6.12564 26.1256L3.46859 23.4686L9.56643 17.3708L12.2235 20.0278L6.12564 26.1256Z"
+        fill="#D41C1C"
       ></path>
     </svg>
   );
 };
 
-export default function CustomNavbar() {
-  const pathname = usePathname();
+export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isSignedIn } = useUser();
-
-  if (["/login", "/signup"].includes(pathname)) {
-    return <></>;
-  }
+  const { signOut } = useClerk();
 
   return (
-    <Navbar isBordered isBlurred className="bg-pink-50">
-      <NavbarBrand>
-        <AcmeLogo />
-        <p className="font-bold text-inherit">Tactiq</p>
-      </NavbarBrand>
+    <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+        <NavbarBrand className="flex flex-row gap-2 cursor-default">
+          <TactiqLogo />
+          <p className="font-bold text-inherit">Tactiq</p>
+        </NavbarBrand>
+      </NavbarContent>
+
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {isSignedIn && (
-          <NavbarItem>
+        <NavbarItem>
+          {isSignedIn ? (
             <Link color="foreground" href="/dashboard">
               Dashboard
             </Link>
-          </NavbarItem>
-        )}
+          ) : (
+            <Link color="foreground" href="/">
+              Home
+            </Link>
+          )}
+        </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="/features">
             Features
@@ -90,33 +89,72 @@ export default function CustomNavbar() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <AuthButtons />
+        {!isSignedIn ? (
+          <>
+            <NavbarItem className="hidden lg:flex">
+              <Link href="/login">Login</Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Button as={Link} color="primary" href="/signup" variant="flat">
+                Sign Up
+              </Button>
+            </NavbarItem>
+          </>
+        ) : (
+          <>
+            <NavbarItem className="hidden lg:flex">
+              <Button onPress={() => signOut()}>Logout</Button>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
+      <MobileNavbar />
     </Navbar>
   );
 }
 
-function AuthButtons() {
+function MobileNavbar() {
   const { isSignedIn } = useUser();
+  const { signOut } = useClerk();
 
   return (
-    <>
-      {isSignedIn ? (
-        <NavbarItem className="hidden lg:flex">
-          <UserButton />
-        </NavbarItem>
+    <NavbarMenu>
+      <NavbarMenuItem>
+        {isSignedIn ? (
+          <Button as={Link} className="w-full" href="/dashboard" size="lg">
+            Dashboard
+          </Button>
+        ) : (
+          <Button as={Link} className="w-full" href="/" size="lg">
+            Home
+          </Button>
+        )}
+      </NavbarMenuItem>
+      <NavbarMenuItem>
+        <Button as={Link} className="w-full" href="/features" size="lg">
+          Features
+        </Button>
+      </NavbarMenuItem>
+
+      <NavbarMenuItem>
+        <Button as={Link} className="w-full" href="/about" size="lg">
+          About Us
+        </Button>
+      </NavbarMenuItem>
+
+      {!isSignedIn ? (
+        <NavbarMenuItem>
+          <Button as={Link} className="w-full" href="/login" size="lg">
+            Login
+          </Button>
+        </NavbarMenuItem>
       ) : (
-        <>
-          <NavbarItem className="hidden lg:flex">
-            <Link href="/login">Login</Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Button as={Link} color="primary" href="/signup" variant="flat">
-              Sign Up
-            </Button>
-          </NavbarItem>
-        </>
+        <NavbarMenuItem>
+          <Button className="w-full" size="lg" onPress={() => signOut()}>
+            Logout
+          </Button>
+        </NavbarMenuItem>
       )}
-    </>
+    </NavbarMenu>
   );
 }
