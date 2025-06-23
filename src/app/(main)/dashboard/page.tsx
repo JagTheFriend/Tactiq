@@ -7,12 +7,12 @@ import NewTopicCard from "./_components/NewTopic";
 
 export default function Dashboard() {
   return (
-    <main className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4">
       <Welcome />
       <div className="flex flex-col items-center md:items-start">
         <Content />
       </div>
-    </main>
+    </section>
   );
 }
 

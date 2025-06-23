@@ -15,13 +15,13 @@ export default async function TopicContent({
   }
 
   return (
-    <main className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4">
       {data && (
         <>
           <TopicDetails topic={data} />
           <TaskList tasks={data.task} />
         </>
       )}
-    </main>
+    </section>
   );
 }
