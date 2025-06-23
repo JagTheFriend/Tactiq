@@ -260,6 +260,14 @@ function AddTaskModal({ topic }: { topic: Topic }) {
                       ".checkbox-search-result input:checked"
                     ) as NodeListOf<HTMLInputElement>;
 
+                    if (selectedTopics.length == 0) {
+                      setIsSaving(false);
+                      return addToast({
+                        title: "Please select a task",
+                        color: "danger",
+                      });
+                    }
+
                     const searchResults = Array.from(selectedTopics).map(
                       (r) => r.value
                     );
