@@ -1,14 +1,13 @@
+import { BackgroundBeamsWithCollision } from "~/components/background-beams-with-collision";
+
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className="flex justify-center items-center bg-gradient-to-br from-purple-50 to-pink-100"
-      style={{ height: "100vh" }}
-    >
-      {children}
-    </div>
+    <BackgroundBeamsWithCollision>
+      <div className="w-full h-full flex justify-center">{children}</div>
+    </BackgroundBeamsWithCollision>
   );
 }
