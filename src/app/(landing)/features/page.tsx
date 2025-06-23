@@ -13,7 +13,10 @@ import { cn } from "~/server/util";
 
 export default function Features() {
   return (
-    <div className="flex flex-col items-center gap-4 w-full">
+    <div
+      className="flex flex-col items-center gap-4 w-full"
+      style={{ height: "100vh" }}
+    >
       <TypewriterEffect />
       <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] justify-center">
         {items.map((item, i) => (
@@ -30,7 +33,7 @@ export default function Features() {
       <Link
         prefetch
         href="/signup"
-        className="border flex flex-row gap-2 p-2 rounded-xl bg-black text-white"
+        className="border flex flex-row gap-2 p-2 rounded-xl bg-black text-white mt-4"
       >
         Get Started
         <IconArrowRight />

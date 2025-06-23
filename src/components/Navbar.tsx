@@ -103,7 +103,7 @@ export default function App() {
         ) : (
           <>
             <NavbarItem className="hidden lg:flex">
-              <Button onPress={() => signOut()}>Logout</Button>
+              <Button color="warning" variant="ghost" onPress={() => signOut()}>Logout</Button>
             </NavbarItem>
           </>
         )}
