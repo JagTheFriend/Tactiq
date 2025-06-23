@@ -17,6 +17,19 @@ Creating an AI powered task manager
 
 ## How To Run
 
+### Docker
+
+1. Add all required env variable into `compose.yml`
+2. Run
+
+```bash
+docker compose up
+```
+
+Application run on [3000](http://localhost:3000)
+
+### Manually
+
 1. Install Dependencies
 
 ```bash
@@ -50,3 +63,5 @@ pnpm db:push
 ```bash
 pnpm dev
 ```
+
+Application run on [3000](http://localhost:3000)

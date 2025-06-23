@@ -1,0 +1,39 @@
+services:
+  nextjs-app:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - app
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://tactiq:tactiq42@postgres:5432/postgres
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      CLERK_SECRET_KEY:
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL: /signup
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL: /login
+      NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: /dashboard
+      NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: /dashboard
+      OPENROUTER_API_KEY:
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - app
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: tactiq
+      POSTGRES_PASSWORD: tactiq42
+
+networks:
+  app:
+    driver: bridge
